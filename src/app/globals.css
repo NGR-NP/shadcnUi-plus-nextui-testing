@@ -2,32 +2,139 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.undraggable {
+  pointer-events: none;
+}
+.dragable {
+  pointer-events: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+button,
+a,
+input,
+label,
+select,
+textarea,
+[role="button"],
+[role="link"],
+[role="checkbox"],
+[role="radio"],
+[role="switch"],
+[role="menuitem"],
+[role="menuitemcheckbox"],
+[role="menuitemradio"],
+[role="combobox"],
+[role="listbox"],
+[role="tree"] {
+  pointer-events: auto;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+    --secondary: 322, 76%, 36%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5% 90%;
+    --input: 240 5% 90%;
+    --ring: 142.1 76.2% 36.3%;
+    --radius: 0.75rem;
+
+    /*  */
+    --NGR-background: hsl(0 0% 100%);
+    --NGR-foreground: hsl(240 10% 3.9%);
+    --NGR-card: hsl(0 0% 100%);
+    --NGR-card-foreground: hsl(240 10% 3.9%);
+    --NGR-popover: hsl(0 0% 100%);
+    --NGR-popover-foreground: hsl(240 10% 3.9%);
+    --NGR-primary: hsl(142.1 76.2% 36.3%);
+    --NGR-primary-foreground: hsl(355.7 100% 97.3%);
+    --NGR-secondary: hsl(322, 76%, 36%);
+    --NGR-secondary-foreground: hsl(240 5.9% 10%);
+    --NGR-muted: hsl(240 4.8% 95.9%);
+    --NGR-muted-foreground: hsl(240 3.8% 46.1%);
+    --NGR-accent: hsl(240 4.8% 95.9%);
+    --NGR-accent-foreground: hsl(240 5.9% 10%);
+    --NGR-destructive: hsl(0 84.2% 60.2%);
+    --NGR-destructive-foreground: hsl(0 0% 98%);
+    --NGR-border: hsl(240 5% 90%);
+    --NGR-input: hsl(240 5% 90%);
+    --NGR-ring: hsl(142.1 76.2% 36.3%);
+    --NGR-radius: 0.5rem;
+  }
+
+  .dark {
+    --NGR-background: hsl(20 14.3% 4.1%);
+    --NGR-foreground: hsl(0 0% 95%);
+    --NGR-card: hsl(24 9.8% 10%);
+    --NGR-card-foreground: hsl(0 0% 95%);
+    --NGR-popover: hsl(0 0% 9%);
+    --NGR-popover-foreground: hsl(0 0% 95%);
+    --NGR-primary: hsl(142.1 70.6% 45.3%);
+    --NGR-primary-foreground: hsl(144.9 80.4% 10%);
+    --NGR-secondary: hsl(322, 71%, 45%);
+    --NGR-secondary-foreground: hsl(0 0% 98%);
+    --NGR-muted: hsl(0 0% 15%);
+    --NGR-muted-foreground: hsl(240 5% 64.9%);
+    --NGR-accent: hsl(12 6.5% 15.1%);
+    --NGR-accent-foreground: hsl(0 0% 98%);
+    --NGR-destructive: hsl(0 62.8% 30.6%);
+    --NGR-destructive-foreground: hsl(0 85.7% 97.3%);
+    --NGR-border: hsl(240 3.7% 15.9%);
+    --NGR-input: hsl(240 3.7% 15.9%);
+    --NGR-ring: hsl(142.4 71.8% 29.2%);
+
+    /*  */
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 142.1 70.6% 45.3%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 322, 71%, 45%; /*  */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142.4 71.8% 29.2%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
   }
 }

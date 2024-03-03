@@ -1,9 +1,7 @@
-import * as React from "react";
+import React, { forwardRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils/Cn";
-import Link from "next/link";
-import type { LinkProps } from "next/link";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -31,52 +29,39 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
-export interface ButtonProps
+export interface NGRButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
-
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
-    return (
-      <button
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
-    );
-  }
-);
-Button.displayName = "Button";
-
-export interface LinkButtonProps
-  extends LinkProps,
-    VariantProps<typeof buttonVariants> {
-  className?: string | undefined;
+  VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
 }
 
-//   export interface LinkButtonProps
-//   extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-//     VariantProps<typeof buttonVariants> {
-//   href: string;
-// }
+const NGRButton = forwardRef<HTMLButtonElement, NGRButtonProps>(
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
+    const buttonClassName = cn(buttonVariants({ variant, size, className }));
 
-const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
-  ({ className, variant, size, href, ...props }, ref) => {
+    if (asChild) {
+      if (React.Children.count(children) !== 1) {
+        throw new Error("NGRButton: Only one child allowed when used asChild.");
+      }
+      const childElement = children as React.ReactElement<any>;
+
+      return React.cloneElement(childElement, {
+        className: cn(buttonClassName, childElement.props.className),
+        ...props,
+        ref,
+      });
+    }
+
     return (
-      <Link
-        href={href}
-        passHref
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      />
+      <button className={buttonClassName} ref={ref} {...props}>
+        {children}
+      </button>
     );
-  }
+  },
 );
+NGRButton.displayName = "NGRButton";
 
-LinkButton.displayName = "LinkButton";
-
-export { Button, LinkButton, buttonVariants };
+export { NGRButton };
